@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  etc_Hosts = ""
+  private_ip = "192.168.56.110"
+
+  config.vm.box = "generic/alpine39"
+  
+  config.trigger.before :up, :reload do |trigger|
+    trigger.info = 'Vagrant up called, we will execute the configuration script for virtual box and check if the network configuration is already done or not.'
+    trigger.run = {inline: 'sudo ./scripts/config_host.sh'}
+  end
+
+  config.vm.provider "virtualbox" do |v|
+    v.name = "chbadadS"
+    v.memory = 1024
+    v.cpus = 1
+  end
+  config.vm.network "private_network", ip: private_ip
+
+  config.vm.provision :shell, path: "./scripts/config_vm.sh"
+
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+    
+end # fin de la bouble principale

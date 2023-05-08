@@ -55,7 +55,7 @@ helm install --kubeconfig /home/vagrant/.kube/config ingress-nginx-app123 ingres
 helm status ingress-nginx
 check_exit_code "ingress-nginx"
 wget https://github.com/paulbouwer/hello-kubernetes/archive/refs/tags/v1.10.1.tar.gz
-tar -xvzf v1.10.1.tart.gz
+tar -xvzf v1.10.1.tar.gz
 cd hello-kubernetes-1.10.1/deploy/helm/
 helm install --kubeconfig /home/vagrant/.kube/config --create-namespace --namespace hello-kubernetes ingress-nginx-app123 ./hello-kubernetes \
   --set ingress.configured=true --set ingress.pathPrefix=custom-message \

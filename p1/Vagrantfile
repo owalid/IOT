@@ -1,0 +1,30 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64"
+  config.vm.synced_folder ".", "/vagrant", disabled: false
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = "2"
+  end
+  config.vm.define "oelayadS" do |oelayadS|
+    oelayadS.vm.box = "debian/bullseye64"
+    oelayadS.vm.hostname = "oelayadS"
+    oelayadS.vm.provider "virtualbox" do |p|
+      p.name = "oelayadS"
+    end
+
+    oelayadS.vm.network "private_network", ip: "192.168.56.110"
+    oelayadS.vm.provision "shell", path: "scripts/server_install.sh"
+  end
+
+  config.vm.define "oelayadSW" do |oelayadSW|
+    oelayadSW.vm.box = "debian/bullseye64"
+    oelayadSW.vm.hostname = "oelayadSW"
+    oelayadSW.vm.provider "virtualbox" do |p|
+      p.name = "oelayadSW"
+    end
+
+    oelayadSW.vm.network "private_network", ip: "192.168.56.111"
+    oelayadSW.vm.provision "shell", path: "scripts/server_worker_install.sh"
+  end
+end

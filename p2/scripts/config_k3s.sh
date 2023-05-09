@@ -92,7 +92,7 @@ function tests
     sleep 1
     message "Getting services"
     kubectl get svc
-    slepp 1
+    sleep 1
     message "Get everything"
     kubectl get all
     sleep 1

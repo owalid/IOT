@@ -1,2 +1,3 @@
-**/**/IOT.pdf
-**/**/.vagrant
+.vagrant
+token
+

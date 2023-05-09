@@ -17,8 +17,8 @@ function error
 function check_exit_code
 {
     if [ ! $? -eq 0 ]; then
-    error "Installation of "$1" failed. The program will exit."
-    exit 1
+        error "Installation of "$1" failed. The program will exit."
+        exit 1
     else
         message ""$1" installed, cool !"
     fi

@@ -45,7 +45,7 @@ function add_ressources
     fi
     echo "export KUBECONFIG=/home/vagrant/.kube/config" >> /home/vagrant/.bashrc
     source /home/vagrant/.bashrc
-    chmod 644 /home/vagrant/.kube/config
+    chmod 600 /home/vagrant/.kube/config
     sudo k3s kubectl get node
     check_exit_code "k3s"
     message "Installing helm package manager for kubernetes"

@@ -80,6 +80,6 @@ function install_and_configure_argo_cd
     message "The api server should be available at https://localhost:8080"
 }
 
-# install_k3d
-# install_k3s
+install_k3d
+install_k3s
 create_cluster_and_namespaces

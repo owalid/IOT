@@ -38,18 +38,18 @@ function install_k3d
 function install_k3s
 {
     message "Installing k3s"
-    curl -sfL https://get.k3s.io | sh
+    curl -sfL https://get.k3s.io | sh -s --no-deploy=servicelb
     if [ ! -d ~/.kube ];then
         message ".kube directory does not exist. We will create it."
         mkdir ~/.kube
     fi
     if [ ! -f ~/.kube/config ];then
         message "config file does not exist. We will create it."
-        kubectl config view --raw >> ~/.kube/config
+        sudo kubectl config view --raw >> ~/.kube/config
     fi
-    echo "export KUBECONFIG=/home/vagrant/.kube/config" >> /home/vagrant/.bashrc
-    source /home/vagrant/.bashrc
-    chmod 600 /home/vagrant/.kube/config
+    echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
+    source ~/.bashrc
+    chmod 600 ~/.kube/config
     k3s --version
     check_exit_code "k3s"
 }
@@ -57,8 +57,8 @@ function install_k3s
 function create_cluster_and_namespaces
 {
     message "Creating cluster and the namespace dev and argo"
-    k3d create cluster p3-iot --api-port 6443 -p 8080:80@loadbalancer --agent 2
-    kubectl cluster info
+    k3d cluster create p3-iot --api-port 6443 -p 8080:80@loadbalancer --agents 2
+    kubectl cluster-info
     kubectl create namespace argocd
     kubectl create namespace dev
     kubectl get ns | grep 'argocd'
@@ -80,6 +80,6 @@ function install_and_configure_argo_cd
     message "The api server should be available at https://localhost:8080"
 }
 
-install_k3d
-install_k3s
+# install_k3d
+# install_k3s
 create_cluster_and_namespaces

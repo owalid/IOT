@@ -41,7 +41,7 @@ vagrant box add <BOX_NAME>
 
 ## Config:
 
-Configure box
+**Configure box**
 
 ```vagrantFile
 Vagrant.configure("2") do |config|
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Run shell script (script.sh) during install
+**Run shell script (script.sh) during install**
 
 ```vagrantFile
 Vagrant.configure("2") do |config|
@@ -60,7 +60,7 @@ end
 ```
 
 
-Port forwarding
+**Port forwarding**
 
 ```vagrantFile
 Vagrant.configure("2") do |config|
@@ -68,3 +68,24 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+**Private Network**
+
+```vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.network "private_network", ip: "192.168.33.110"
+end
+```
+
+> Tips : By default, vbox allow ip in range 192.168.56.0/21. If we want to change this ip range, we must provide a network.conf file inside /etc/vbox/.
+> For example, to allow 192.168.33.0/8 (and therefore have only the last 8 bytes to allow an ip address), we can add this in the network.conf:
+> `* 192.168.33.0/8`
+> Now, because we want to create this file _before_ the vms are up, or destroyed etc., we need to add a trigger block inside the vagrantfile:
+```vagrantfile
+Vagrant.configure("2") do |config|
+  config.trigger.before :COMMAND do |trigger|
+    trigger.info = 'usefull info'
+    trigger.run = {inline: 'sudo ./myscript.sh'}
+  end
+end
+```
+> We can use the same method to add after a COMMAND.

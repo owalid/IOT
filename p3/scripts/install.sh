@@ -37,13 +37,9 @@ function install_k3d
 
 function install_kubectl
 {
-    message "Installing kubectl"
-    sudo apt-get update
-    sudo apt-get install -y ca-certificates curl
-    sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-    sudo apt-get update
-    sudo apt-get install -y kubectl
+    message "Installing k3s"
+    curl -sfL https://get.k3s.io | sh -s --no-deploy=servicelb
+    curl -sfL https://get.k3s.io | sh -s - --no-deploy=servicelb
     if [ ! -d ~/.kube ];then
         message ".kube directory does not exist. We will create it."
         mkdir ~/.kube
@@ -52,11 +48,10 @@ function install_kubectl
         message "config file does not exist. We will create it."
         sudo kubectl config view --raw >> ~/.kube/config
     fi
-    export KUBECONFIG=~/.kube/config
     echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
     source ~/.bashrc
     chmod 600 ~/.kube/config
-    kubectl version --short
+    kubectl version
     check_exit_code "kubectl"
 }
 
@@ -107,7 +102,7 @@ function add_wil_app_to_argocd
 }
 
 install_k3d
-install_k3s
+install_kubectl
 create_cluster_and_namespaces
 install_and_configure_argo_cd
 add_wil_app_to_argocd

@@ -38,7 +38,6 @@ function install_k3d
 function install_kubectl
 {
     message "Installing k3s"
-    curl -sfL https://get.k3s.io | sh -s --no-deploy=servicelb
     curl -sfL https://get.k3s.io | sh -s - --no-deploy=servicelb
     if [ ! -d ~/.kube ];then
         message ".kube directory does not exist. We will create it."

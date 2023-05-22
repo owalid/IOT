@@ -42,7 +42,7 @@ function install_kubectl
     fi
     if [ ! -f /home/taskmasters/.kube/config ];then
         message "config file does not exist. We will create it."
-        sudo kubectl config view --raw >> ~/.kube/config
+        sudo kubectl config view --raw >> /home/taskmasters/.kube/config
     fi
     grep -xq 'export KUBECONFIG=/home/taskmasters/.kube/config' /home/taskmasters/.bashrc
     if [ ! $? -eq 0 ];then
@@ -57,7 +57,7 @@ function install_kubectl
 function create_cluster_and_namespaces
 {
     message "Creating cluster and the namespace dev and argo"
-    k3d cluster create p3-iot --api-port 6443 -p 8080:80@loadbalancer
+    k3d cluster create p3-iot --api-port 6550 -p "8081:80@loadbalancer" --agents 2
     kubectl cluster-info
     kubectl create namespace argocd
     kubectl create namespace dev

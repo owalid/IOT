@@ -50,7 +50,7 @@ function install_kubectl
         source /home/taskmasters/.bashrc
     fi
     # chmod 600 /home/taskmasters/.kube/config
-    kubectl version
+    sudo kubectl version
     # check_exit_code "kubectl"
 }
 
@@ -58,25 +58,26 @@ function create_cluster_and_namespaces
 {
     message "Creating cluster and the namespace dev and argo"
     k3d cluster create p3-iot --api-port 6550 -p "8080:80@loadbalancer" --agents 2
-    kubectl cluster-info
-    kubectl create namespace argocd
-    kubectl create namespace dev
-    kubectl get ns | grep 'argocd'
+    sudo kubectl cluster-info
+    sudo kubectl create namespace argocd
+    sudo kubectl create namespace dev
+    sudo kubectl get ns | grep 'argocd'
     check_exit_code "namespace argocd"
-    kubectl get ns | grep 'dev'
+    sudo kubectl get ns | grep 'dev'
     check_exit_code "namespace dev"
+    sudo kubectl config set-context --current --namespace=argocd
 }
 
 function install_and_configure_argo_cd
 {
     message "Installing argocd server to the cluster"
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
     message "Installing argo-cli"
     curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
     rm argocd-linux-amd64
     message "Set argocd-server service as load balancer in order to access to the api"
-    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+    sudo kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
     message "The api server should be available at https://localhost:8080"
     message "Setting env variable to allow cli to connect to api server"
     export ARGOCD_OPTS='--port-forward-namespace argocd'
@@ -94,12 +95,11 @@ function install_and_configure_argo_cd
 function add_wil_app_to_argocd
 {
     message "Create an app with argo cd."
-    kubectl config set-context --current --namespace=argocd
     argocd app create wil-app --repo https://github.com/kibatche/oel-ayad-chbadad-iot-p3.git --path . --dest-server https://kubernetes.default.svc --dest-namespace dev
     message "Add automated sync policy to wil-app"
-    argocd app set wil-app --sync-policy automated
+    sudo argocd app set wil-app --sync-policy automated
     message "Syncing app"
-    argocd app sync wil-app
+    sudo argocd app sync wil-app
     message "Checking the status of the app"
     argocd app get wil-app
 }

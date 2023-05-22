@@ -49,7 +49,7 @@ function install_kubectl
         echo "export KUBECONFIG=/home/taskmasters/.kube/config" >> /home/taskmasters/.bashrc
         source /home/taskmasters/.bashrc
     fi
-    chmod 600 /home/taskmasters/.kube/config
+    # chmod 600 /home/taskmasters/.kube/config
     kubectl version
     # check_exit_code "kubectl"
 }
@@ -57,7 +57,7 @@ function install_kubectl
 function create_cluster_and_namespaces
 {
     message "Creating cluster and the namespace dev and argo"
-    k3d cluster create p3-iot --api-port 6550 -p "8081:80@loadbalancer" --agents 2
+    k3d cluster create p3-iot --api-port 6550 -p "8080:80@loadbalancer" --agents 2
     kubectl cluster-info
     kubectl create namespace argocd
     kubectl create namespace dev

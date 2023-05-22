@@ -51,8 +51,9 @@ function create_cluster_and_namespaces
     kubectl create namespace argocd && kubectl create namespace dev
     kubectl get ns | grep 'argocd'
     check_exit_code "namespace argocd"
-    kubectl get ns | grep 'dev'
+    sudo kubectl get ns | grep 'dev'
     check_exit_code "namespace dev"
+    sudo kubectl config set-context --current --namespace=argocd
 }
 
 function install_and_configure_argo_cd

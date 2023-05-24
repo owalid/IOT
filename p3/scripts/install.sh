@@ -144,7 +144,6 @@ function test_ci_cd_flow
     git push origin main
     message "Syncing the app"
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
-    argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
     argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Test with v2"
     curl localhost:8888

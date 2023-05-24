@@ -134,5 +134,6 @@ install_k3d
 create_cluster_and_namespaces
 install_and_configure_argo_cd
 add_wil_app_to_argocd
+message "[Info] Argocd ui i available at : argocd.local:8080"
 test_ci_cd_flow
 rm -rf /home/taskmasters/oel-ayad-chbadad-iot-p3

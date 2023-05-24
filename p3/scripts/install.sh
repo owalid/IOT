@@ -143,8 +143,8 @@ function test_ci_cd_flow
     git commit -m "Change to the v2"
     git push origin main
     message "Syncing the app"
-    argocd app sync wil-app
-    argocd app get wil-app
+    argocd app sync wil-app $ARGOCD_OPTS
+    argocd app get wil-app $ARGOCD_OPTS
     message "Test with v2"
     curl localhost:8888
 }

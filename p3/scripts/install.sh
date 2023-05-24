@@ -103,7 +103,6 @@ function add_wil_app_to_argocd
     message "Syncing app"
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Checking the status of the app"
-    argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
     argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
 }
 
@@ -112,7 +111,7 @@ function test_ci_cd_flow
     message "Test with v1"
     curl localhost:8888
     message "Git clone and push v2"
-    cd /home/taskmaster
+    cd /home/taskmasters
     git clone git@github.com:kibatche/oel-ayad-chbadad-iot-p3.git
     cd oel-ayad-chbadad-iot-p3
     sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' wil-app-deployment.yaml
@@ -121,7 +120,6 @@ function test_ci_cd_flow
     git push origin main
     message "Syncing the app"
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
-    argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
     argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Test with v2"
     curl localhost:8888

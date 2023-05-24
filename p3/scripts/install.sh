@@ -145,8 +145,13 @@ function test_ci_cd_flow
     message "Syncing the app"
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
     argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
+    argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Test with v2"
     curl localhost:8888
+    sed -i 's/wil42\/playground\:v2/wil42\/playground\:v1/g' wil-app-deployment.yaml
+    git add .
+    git commit -m "Change to the v1"
+    git push origin main
 }
 
 install_kubectl

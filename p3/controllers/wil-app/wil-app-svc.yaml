@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
 <<<<<<< HEAD
+<<<<<<< HEAD
   labels:
     app: wil-app
   name: wil-app-svc
@@ -16,11 +17,22 @@ spec:
     app: wil-app
   type: NodePort
 =======
+=======
+  labels:
+    app: wil-app
+>>>>>>> cab4746 (final commit ?)
   name: wil-app-svc
 spec:
   ports:
-  - port: 8888
+  - name: 8888-8888
+    nodePort: 30080
+    port: 8888
+    protocol: TCP
     targetPort: 8888
   selector:
     app: wil-app
+<<<<<<< HEAD
 >>>>>>> d5aa3b8 (p3 à jour manque exposition du service w<il app qui ne fonctionne qu'avec portforwarding)
+=======
+  type: NodePort
+>>>>>>> cab4746 (final commit ?)

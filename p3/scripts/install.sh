@@ -130,6 +130,25 @@ function test_ci_cd_flow
     git push origin main
 }
 
+function test_ci_cd_flow
+{
+    message "Test with v1"
+    curl localhost:8888
+    message "Git clone and push v2"
+    cd /home/taskmaster
+    git clone https://github.com/kibatche/oel-ayad-chbadad-iot-p3.git
+    cd oel-ayad-chbadad-iot-p3
+    sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' wil-app-deployment.yaml
+    git add .
+    git commit -m "Change to the v2"
+    git push origin main
+    message "Syncing the app"
+    argocd app sync wil-app
+    argocd app get wil-app
+    message "Test with v2"
+    curl localhost:8888
+}
+
 install_kubectl
 install_k3d
 create_cluster_and_namespaces

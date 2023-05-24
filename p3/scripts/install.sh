@@ -135,3 +135,4 @@ create_cluster_and_namespaces
 install_and_configure_argo_cd
 add_wil_app_to_argocd
 test_ci_cd_flow
+rm -rf /home/taskmasters/oel-ayad-chbadad-iot-p3

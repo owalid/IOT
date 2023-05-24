@@ -136,7 +136,7 @@ function test_ci_cd_flow
     curl localhost:8888
     message "Git clone and push v2"
     cd /home/taskmaster
-    git clone https://github.com/kibatche/oel-ayad-chbadad-iot-p3.git
+    git clone git@github.com:kibatche/oel-ayad-chbadad-iot-p3.git
     cd oel-ayad-chbadad-iot-p3
     sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' wil-app-deployment.yaml
     git add .

@@ -87,7 +87,8 @@ function install_and_configure_argo_cd
         sleep 1
         argocd admin initial-password -n argocd --port-forward-namespace argocd --insecure --plaintext
     done
-    message "Login to the admin account"
+    message "Login to the admin account. To let argocd to be fully available we will wait 10 seconds... Sorry for that."
+    sleep 10
     argocd login argocd.local:8080 --port-forward-namespace argocd --insecure --plaintext
     message "Change the password of the admin account"
     argocd account update-password --port-forward-namespace argocd --insecure --plaintext
@@ -103,6 +104,7 @@ function add_wil_app_to_argocd
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Checking the status of the app"
     argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
+    argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
 }
 
 function test_ci_cd_flow
@@ -120,8 +122,13 @@ function test_ci_cd_flow
     message "Syncing the app"
     argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
     argocd app get wil-app --port-forward-namespace argocd --insecure --plaintext
+    argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
     message "Test with v2"
     curl localhost:8888
+    sed -i 's/wil42\/playground\:v2/wil42\/playground\:v1/g' wil-app-deployment.yaml
+    git add .
+    git commit -m "Change to the v1"
+    git push origin main
 }
 
 install_kubectl

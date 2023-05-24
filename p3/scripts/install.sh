@@ -66,7 +66,7 @@ function install_and_configure_argo_cd
     message "Waiting for restart to be complete..."
     kubectl -n argocd rollout status deployment argocd-server
     message "Installing ingress for argocd"
-    kubectl -n argocd -f ../controllers/argocd/argocd-ingress/argocd-ingress.yaml
+    kubectl apply -n argocd -f ../controllers/argocd/argocd-ingress/argocd-ingress.yaml
     message "Installing argo-cli"
     curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd

@@ -48,11 +48,13 @@ function create_cluster_and_namespaces
     message "Creating cluster and the namespace dev and argo"
     k3d cluster create p3-iot -p "8080:80@loadbalancer" -p "8888:30080@agent:0" --agents 2
     kubectl cluster-info
-    kubectl create namespace argocd && kubectl create namespace dev
+    kubectl create namespace argocd && kubectl create namespace dev && kubectl create namespace gitlab
     kubectl get ns | grep 'argocd'
     check_exit_code "namespace argocd"
     kubectl get ns | grep 'dev'
     check_exit_code "namespace dev"
+    kubectl get ns | grep 'gitlab'
+    check_exit_code "namespace gitlab"
 }
 
 function install_and_configure_argo_cd

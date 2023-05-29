@@ -1,3 +1,5 @@
 .vagrant
 token
 IOT.pdf
+kubectl
+kubectl.sha256

@@ -24,20 +24,9 @@ function check_exit_code
     fi
 }
 
-kubectl create namespace dev
-kubectl get ns | grep 'argocd'
-check_exit_code "namespace argocd"
-
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-helm repo add gitlab https://charts.gitlab.io/
-helm repo update
-helm upgrade --install gitlab-app gitlab/gitlab \
-    -n gitlab \
-    --timeout 600s \
-    --set global.hosts.domain=example.com \
-    --set global.hosts.externalIP=10.10.10.10 \
-    --set certmanager-issuer.email=me@example.com \
-    --set postgresql.image.tag=13.6.0
-
-kubectl get secret gitlab-app-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
+kubectl create namespace gitlab
+kubectl get ns | grep 'gitlab'
+check_exit_code "namespace gitlab"
+kubectl apply -f ../controllers/gitlab/gitlab-deployment.yaml -n gitlab
+kubectl apply -f ../controllers/gitlab/gitlab-svc.yaml -n gitlab
+k3d cluster edit p3-iot --port-add "7777:30082@loadbalancer"

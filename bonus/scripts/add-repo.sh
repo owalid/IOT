@@ -48,8 +48,8 @@ check_empty_var $ARGOCD_APP_NAME "Name of argocd application to add"
 message "Login to argocd"
 argocd login argocd.local:8080 --port-forward-namespace argocd --insecure --plaintext
 
-message "Add repository http://$CLUSTER_IP/$GITLAB_END_URL with application name: $3 in argocd"
-argocd app create $3 --repo http://$CLUSTER_IP/$GITLAB_END_URL --path . --dest-server https://kubernetes.default.svc --dest-namespace dev --sync-policy automated --insecure --plaintext
+message "Add repository http://$CLUSTER_IP/$GITLAB_END_URL with application name: $ARGOCD_APP_NAME in argocd"
+argocd app create $ARGOCD_APP_NAME --repo http://$CLUSTER_IP/$GITLAB_END_URL --path . --dest-server https://kubernetes.default.svc --dest-namespace dev --sync-policy automated --insecure --plaintext
 
-message "Sync $3 application name in argocd"
-argocd app sync $3 --port-forward-namespace argocd --insecure --plaintext
+message "Sync $ARGOCD_APP_NAME application name in argocd"
+argocd app sync $ARGOCD_APP_NAME --port-forward-namespace argocd --insecure --plaintext

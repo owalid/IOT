@@ -51,9 +51,8 @@ function create_cluster_and_namespaces
     kubectl create namespace argocd && kubectl create namespace dev
     kubectl get ns | grep 'argocd'
     check_exit_code "namespace argocd"
-    sudo kubectl get ns | grep 'dev'
+    kubectl get ns | grep 'dev'
     check_exit_code "namespace dev"
-    sudo kubectl config set-context --current --namespace=argocd
 }
 
 function install_and_configure_argo_cd
@@ -112,30 +111,7 @@ function test_ci_cd_flow
     message "Test with v1"
     curl localhost:8888
     message "Git clone and push v2"
-    cd $HOME
-    git clone git@github.com:kibatche/oel-ayad-chbadad-iot-p3.git
-    cd oel-ayad-chbadad-iot-p3
-    sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' wil-app-deployment.yaml
-    git add .
-    git commit -m "Change to the v2"
-    git push origin main
-    message "Syncing the app"
-    argocd app sync wil-app --port-forward-namespace argocd --insecure --plaintext
-    argocd app wait wil-app --port-forward-namespace argocd --insecure --plaintext
-    message "Test with v2"
-    curl localhost:8888
-    sed -i 's/wil42\/playground\:v2/wil42\/playground\:v1/g' wil-app-deployment.yaml
-    git add .
-    git commit -m "Change to the v1"
-    git push origin main
-}
-
-function test_ci_cd_flow
-{
-    message "Test with v1"
-    curl localhost:8888
-    message "Git clone and push v2"
-    cd $HOME
+    cd /home/taskmasters
     git clone git@github.com:kibatche/oel-ayad-chbadad-iot-p3.git
     cd oel-ayad-chbadad-iot-p3
     sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' wil-app-deployment.yaml

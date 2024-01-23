@@ -4,7 +4,7 @@ IoT est un projet qui permet de découvrir vagrant, argocd et kubernetes via 3 e
 
 1) Mise en place d'une vm avec vagrant et d'un _dummy_ serveur avec k3s
 2) Mise en place de 3 applications, avec une vm déployée avec vagrant, et un ingress qui dispatche les requêtes selon l'host http spécifié.
-3) Mise en place d'un pipeline argocd avec k3d et mise à jour automatique d'une application selon le tag de version de l'image docker spécifié.
+3) Mise en place d'un pipeline argocd avec k3d et intégration continue d'une application avec github.
 4) (Bonus) Mise en place d'une instance personnelle gitlab afin d'opérer comme dans la partie 3, mais sans github.
 
 
@@ -48,7 +48,7 @@ Une image qui illustre cet exercice :
 
 ![image](https://github.com/owalid/IOT/assets/61985948/4ff6d102-1f76-4ca9-b68d-99f1d8b3e81a)
 
-## Mise en place d'un pipeline argocd avec k3d et mise à jour automatique d'une application selon le tag de version de l'image docker spécifié.
+## Mise en place d'un pipeline argocd avec k3d et intégration continue d'une application avec github.
 
 => Contraintes :
 - Plus de vagrant, à la place de vm on utilisera des conteneurs docker

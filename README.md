@@ -64,7 +64,7 @@ Voici une image qui illustre l'exercice :
 
 => Usage :
 
-/!\ Attention, si vous faites cela sur votre ordinateur, vous risquez de vous retrouver avec des des applications que vous ne voulez probablement pas ! Faites le sur une vm avec docker d'installé.
+/!\ Attention, si vous faites cela sur votre ordinateur, vous risquez de vous retrouver avec des applications que vous ne voulez probablement pas ! Faites le sur une vm avec docker d'installé.
 
 - `cd p3/scripts`
 - `bash install.sh`
@@ -82,7 +82,7 @@ Exemple de l'application synchronisée dans argocd :
 - créer un namespace gitlab
 - Tout ce qui a été fait dans la partie 3 doit fonctionner de même avec cette instance gitlab.
 
-/!\ Attention, si vous faites cela sur votre ordinateur, vous risquez de vous retrouver avec des des applications que vous ne voulez probablement pas ! Faites le sur une vm avec docker d'installé.
+/!\ Attention, si vous faites cela sur votre ordinateur, vous risquez de vous retrouver avec des applications que vous ne voulez probablement pas ! Faites le sur une vm avec docker d'installé.
 
 => Usage :
 - `cd bonus && bash install.sh && bash add_repo.sh`

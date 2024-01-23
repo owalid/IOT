@@ -22,7 +22,7 @@ IoT est un projet qui permet de découvrir vagrant, argocd et kubernetes via 3 e
 - `vagrant up`
 - `vagrant ssh oelayadS` | `vagrant ssh oelayadSW`
 - `sudo kubectl get nodes -o wide`
-- `ip a show eth1` (le même commande peut être effectuée sur la vm qui contient le _server worker_)
+- `ip a show eth1` (la même commande peut être effectuée sur la vm qui contient le _server worker_)
 
 ![image](https://github.com/owalid/IOT/assets/61985948/b3a37744-3995-4015-82ab-0d78c55a8535)
 
